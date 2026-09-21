@@ -30,7 +30,6 @@ public class BinaryHeap {
         }
         int min = heap.get(0);
         int last = heap.remove(heap.size() - 1);
-
         if (!heap.isEmpty()) {
             heap.set(0, last);
             siftDown(0);
@@ -41,7 +40,7 @@ public class BinaryHeap {
     private void siftDown(int i) {
         int size = heap.size();
         while (true) {
-            int left  = 2 * i + 1;
+            int left = 2 * i + 1;
             int right = 2 * i + 2;
             int smallest = i;
 
@@ -52,7 +51,6 @@ public class BinaryHeap {
                 smallest = right;
             }
             if (smallest == i) break;
-
             swap(i, smallest);
             i = smallest;
         }
@@ -72,6 +70,44 @@ public class BinaryHeap {
         }
         for (int i = heap.size() / 2 - 1; i >= 0; i--) {
             siftDown(i);
+        }
+    }
+
+    public static void heapSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        int n = arr.length;
+
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            siftDownMax(arr, n, i);
+        }
+
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            siftDownMax(arr, i, 0);
+        }
+    }
+
+    private static void siftDownMax(int[] arr, int heapSize, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < heapSize && arr[left] > arr[largest]) {
+            largest = left;
+        }
+        if (right < heapSize && arr[right] > arr[largest]) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            siftDownMax(arr, heapSize, largest);
         }
     }
 
@@ -100,7 +136,7 @@ public class BinaryHeap {
     private void printRec(int i, int level) {
         if (i >= heap.size()) return;
         printRec(2 * i + 2, level + 1);
-        System.out.println("    ".repeat(level) + heap.get(i));
+        System.out.println(" ".repeat(level) + heap.get(i));
         printRec(2 * i + 1, level + 1);
     }
 
