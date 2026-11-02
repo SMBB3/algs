@@ -1,5 +1,3 @@
-package AlgoritmTask.XsFunction.src;
-
 public class Main {
     public static void main(String[] args) {
         int[] numbers = {2, 7, 11, 15};
